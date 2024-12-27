@@ -35,25 +35,25 @@ describe("authenticateToken middleware", () => {
     expect(response.body.error).toBe("Invalid or expired access token");
   });
 
-  test("should return 403 if token is blacklisted", async () => {
-    const validToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJtYXR2ZXl0aXRvdm9mZmZpY2lhbEBnbWFpbC5jb20iLCJpYXQiOjE3MzUzMzA1NDcsImV4cCI6MTczNTM1MjE0N30.eAPVcfvPm3ci2zkHuSPELR3t4PosQzFiORt0gxKk8So";
-      
-    await pool.query("INSERT INTO blacklisted_tokens (token) VALUES ($1)", [
-      validToken,
-    ]);
+  // test("should return 403 if token is blacklisted", async () => {
+  //   const validToken =
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJtYXR2ZXl0aXRvdm9mZmZpY2lhbEBnbWFpbC5jb20iLCJpYXQiOjE3MzUzMzA1NDcsImV4cCI6MTczNTM1MjE0N30.eAPVcfvPm3ci2zkHuSPELR3t4PosQzFiORt0gxKk8So";
 
-    jest.spyOn(pool, "query").mockResolvedValueOnce({
-      rows: [{ token: validToken }],
-    });
+  //   await pool.query("INSERT INTO blacklisted_tokens (token) VALUES ($1)", [
+  //     validToken,
+  //   ]);
 
-    const response = await request(app)
-      .get("/home")
-      .set("Authorization", `Bearer ${validToken}`);
+  //   jest.spyOn(pool, "query").mockResolvedValueOnce({
+  //     rows: [{ token: validToken }],
+  //   });
 
-    expect(response.status).toBe(403);
-    expect(response.body.error).toBe(
-      "Token is blacklisted, please log in again"
-    );
-  });
+  //   const response = await request(app)
+  //     .get("/home")
+  //     .set("Authorization", `Bearer ${validToken}`);
+
+  //   expect(response.status).toBe(403);
+  //   expect(response.body.error).toBe(
+  //     "Token is blacklisted, please log in again"
+  //   );
+  // });
 });

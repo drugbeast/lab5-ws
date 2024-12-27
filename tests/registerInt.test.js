@@ -32,18 +32,19 @@ describe("register integration tests", () => {
   });
 
   test("should insert a user into the database", async () => {
+    const userNumber = Math.random() * 10
     const response = await request(server)
       .post("/register")
-      .send({ username: "testuser", password: "password123" });
+      .send({ username: `testuser${userNumber}`, password: "password123" });
 
     expect(response.status).toBe(201);
     expect(response.text).toBe("User registered");
 
     const { rows } = await pool.query(
       "SELECT * FROM users WHERE username = $1;",
-      ["testuser"]
+      [`testuser${userNumber}`]
     );
     expect(rows).toHaveLength(1);
-    expect(rows[0].username).toBe("testuser");
+    expect(rows[0].username).toBe(`testuser${userNumber}`);
   });
 });
