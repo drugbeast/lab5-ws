@@ -27,9 +27,9 @@ jobs:
     - name: Run tests
       run: npm test
 
-    # 6. Деплой на Render (если тесты прошли успешно)
-    - name: Deploy to Render
-      uses: render-examples/github-action@v1
-      with:
-        api-key: ${{ secrets.RENDER_API_KEY }}
-        service-id: ${{ secrets.RENDER_SERVICE_ID }}
+    # # 6. Деплой на Render (если тесты прошли успешно)
+    # - name: Deploy to Render
+    #   uses: render-examples/github-action@v1
+    #   with:
+    #     api-key: ${{ secrets.RENDER_API_KEY }}
+    #     service-id: ${{ secrets.RENDER_SERVICE_ID }}
